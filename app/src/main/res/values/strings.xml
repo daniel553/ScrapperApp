@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ScrapperApp</string>
+    <string name="fragment_chat_input_hint">Write your message</string>
 </resources>

@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tripletres.scrapperapp.R;
+import com.tripletres.scrapperapp.data.Message;
+
+import java.util.List;
 
 /**
  * Chat fragment user interface
@@ -17,6 +20,8 @@ import com.tripletres.scrapperapp.R;
 public class ChatFragment extends Fragment implements ChatContract.View {
 
     private ChatContract.Presenter mPresenter;
+
+    private List<Message> mMessages;
 
     public ChatFragment() {
     }
@@ -36,6 +41,12 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        bindData(getArguments());
+    }
+
+    @Override
     public void setPresenter(ChatContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -47,6 +58,11 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
     @Override
     public void bindData(Bundle args) {
+        mPresenter.loadMessages();
+    }
 
+    @Override
+    public void showMessages(List<Message> messages) {
+        mMessages = messages;
     }
 }

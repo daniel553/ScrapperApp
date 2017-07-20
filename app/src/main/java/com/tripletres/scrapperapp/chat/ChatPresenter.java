@@ -1,6 +1,10 @@
 package com.tripletres.scrapperapp.chat;
 
+import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
+
+import java.util.List;
 
 /**
  * Chat Presenter class.
@@ -32,7 +36,18 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void loadMessages() {
+        mChatRepository.getMessages(new ChatDataSourceContract.LoadCallback() {
+            @Override
+            public void onMessagesLoaded(List<Message> messages) {
+                //Refresh view
+                mChatView.showMessages(messages);
+            }
 
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
 
