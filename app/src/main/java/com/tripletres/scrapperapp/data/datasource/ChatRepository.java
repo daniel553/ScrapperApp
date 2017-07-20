@@ -1,13 +1,9 @@
 package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
-import com.tripletres.scrapperapp.util.AppUtil;
 import com.tripletres.scrapperapp.util.LogUtil;
-import com.tripletres.scrapperapp.util.RealmUtil;
 
-import java.util.List;
-
-import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Chat main repsitory
@@ -34,17 +30,17 @@ public class ChatRepository implements ChatDataSourceContract {
 
     @Override
     public void getMessages(final LoadCallback callback) {
-        Realm realm = null;
-        if (AppUtil.DEBUG) {
-            try {
-                realm = RealmUtil.getInstance();
-                if (realm.where(Message.class).count() <= 0)
-                    seedMessages(callback);
-            } finally {
-                if (realm != null)
-                    realm.close();
+        mChatDatasource.getMessages(new LoadCallback() {
+            @Override
+            public void onMessagesLoaded(RealmResults<Message> messages) {
+                LogUtil.d(TAG, "Msgs: " + messages.size());
+                callback.onMessagesLoaded(messages);
             }
-        }
+
+            @Override
+            public void onError() {
+            }
+        });
     }
 
     @Override
@@ -56,7 +52,7 @@ public class ChatRepository implements ChatDataSourceContract {
     public void seedMessages(final LoadCallback callback) {
         mChatDatasource.seedMessages(new LoadCallback() {
             @Override
-            public void onMessagesLoaded(List<Message> messages) {
+            public void onMessagesLoaded(RealmResults<Message> messages) {
                 LogUtil.d(TAG, "Msgs: " + messages.size());
                 callback.onMessagesLoaded(messages);
             }

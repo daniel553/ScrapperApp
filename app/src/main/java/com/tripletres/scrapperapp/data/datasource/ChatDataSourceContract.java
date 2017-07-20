@@ -4,6 +4,8 @@ import com.tripletres.scrapperapp.data.Message;
 
 import java.util.List;
 
+import io.realm.RealmResults;
+
 /**
  * Chat data source interface.
  * Defines main methods for data source
@@ -12,7 +14,7 @@ import java.util.List;
 
 public interface ChatDataSourceContract {
     interface LoadCallback{
-        void onMessagesLoaded(List<Message> messages);
+        void onMessagesLoaded(RealmResults<Message> messages);
         void onError();
     }
 

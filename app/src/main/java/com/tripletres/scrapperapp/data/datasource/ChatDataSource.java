@@ -2,12 +2,14 @@ package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.util.AppUtil;
+import com.tripletres.scrapperapp.util.LogUtil;
 import com.tripletres.scrapperapp.util.RealmUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Chat data source.
@@ -16,6 +18,8 @@ import io.realm.Realm;
  */
 
 public class ChatDataSource implements ChatDataSourceContract {
+
+    private static final String TAG = ChatDataSource.class.getName();
     private static ChatDataSource INSTANCE = null;
 
 
@@ -30,7 +34,18 @@ public class ChatDataSource implements ChatDataSourceContract {
 
     @Override
     public void getMessages(LoadCallback callback) {
-
+        Realm realm = null;
+        if (AppUtil.DEBUG) {
+            try {
+                realm = RealmUtil.getInstance();
+                if (realm.where(Message.class).count() <= 0)
+                    seedMessages(callback);
+                RealmResults<Message> messages = realm.where(Message.class).findAll();
+                callback.onMessagesLoaded(messages);
+            } catch (IllegalStateException ise) {
+                LogUtil.e(TAG, ise.getMessage(), ise);
+            }
+        }
     }
 
     @Override
@@ -53,10 +68,8 @@ public class ChatDataSource implements ChatDataSourceContract {
                     messages.add(realm.copyToRealm(msg));
                 }
                 realm.commitTransaction();
-                callback.onMessagesLoaded(messages);
-            } finally {
-                if (realm != null)
-                    realm.close();
+            } catch (IllegalStateException ise) {
+                LogUtil.e(TAG, ise.getMessage(), ise);
             }
         }
     }

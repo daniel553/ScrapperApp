@@ -6,7 +6,7 @@ import com.tripletres.scrapperapp.BasePresenter;
 import com.tripletres.scrapperapp.BaseView;
 import com.tripletres.scrapperapp.data.Message;
 
-import java.util.List;
+import io.realm.RealmResults;
 
 /**
  * Defines the chat presenter and view contract
@@ -24,7 +24,7 @@ public interface ChatContract {
 
         void bindData(Bundle args);
 
-        void showMessages(List<Message> messages);
+        void showMessages(RealmResults<Message> messages);
     }
 
 

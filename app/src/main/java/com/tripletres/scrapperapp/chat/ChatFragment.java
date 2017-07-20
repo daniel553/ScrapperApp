@@ -6,11 +6,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 
-import java.util.List;
+import io.realm.RealmResults;
 
 /**
  * Chat fragment user interface
@@ -21,7 +22,9 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
     private ChatContract.Presenter mPresenter;
 
-    private List<Message> mMessages;
+    private RealmResults<Message> mMessages;
+    private ChatMessagesListAdapter mAdapter;
+    private ListView mMessagesListView;
 
     public ChatFragment() {
     }
@@ -53,7 +56,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
     @Override
     public void bindUI(View root) {
-
+        mMessagesListView = (ListView) root.findViewById(R.id.fragment_chat_message_list);
     }
 
     @Override
@@ -62,7 +65,9 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     }
 
     @Override
-    public void showMessages(List<Message> messages) {
+    public void showMessages(RealmResults<Message> messages) {
         mMessages = messages;
+        mAdapter = new ChatMessagesListAdapter(mMessages);
+        mMessagesListView.setAdapter(mAdapter);
     }
 }
