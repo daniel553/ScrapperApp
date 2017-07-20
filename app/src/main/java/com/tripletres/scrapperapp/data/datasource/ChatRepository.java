@@ -63,4 +63,19 @@ public class ChatRepository implements ChatDataSourceContract {
             }
         });
     }
+
+    @Override
+    public void saveMessage(Message message, final SaveMessageCallback callback) {
+        mChatDatasource.saveMessage(message, new SaveMessageCallback() {
+            @Override
+            public void onMessageSaved(Message message) {
+                LogUtil.d(TAG, message.getBody());
+                callback.onMessageSaved(message);
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
+    }
 }

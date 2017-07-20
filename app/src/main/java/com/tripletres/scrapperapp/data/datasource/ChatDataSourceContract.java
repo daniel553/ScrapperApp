@@ -2,8 +2,6 @@ package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
 
-import java.util.List;
-
 import io.realm.RealmResults;
 
 /**
@@ -13,17 +11,32 @@ import io.realm.RealmResults;
  */
 
 public interface ChatDataSourceContract {
-    interface LoadCallback{
+
+    //CALLBACKS
+    interface LoadCallback {
         void onMessagesLoaded(RealmResults<Message> messages);
+
         void onError();
     }
 
-    interface GetMessageCallback{
+    interface GetMessageCallback {
         void onMessageLoaded(Message message);
+
         void onError();
     }
+
+    interface SaveMessageCallback {
+        void onMessageSaved(Message message);
+        void onError();
+    }
+
+    //MAIN METHODS
 
     void getMessages(LoadCallback callback);
+
     void getMessage(GetMessageCallback callback);
+
     void seedMessages(LoadCallback callback);
+
+    void saveMessage(Message message, SaveMessageCallback callback);
 }

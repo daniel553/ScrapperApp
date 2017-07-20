@@ -44,6 +44,7 @@ public class ChatDataSource implements ChatDataSourceContract {
                 callback.onMessagesLoaded(messages);
             } catch (IllegalStateException ise) {
                 LogUtil.e(TAG, ise.getMessage(), ise);
+                callback.onError();
             }
         }
     }
@@ -70,7 +71,23 @@ public class ChatDataSource implements ChatDataSourceContract {
                 realm.commitTransaction();
             } catch (IllegalStateException ise) {
                 LogUtil.e(TAG, ise.getMessage(), ise);
+                callback.onError();
             }
+        }
+    }
+
+    @Override
+    public void saveMessage(Message message, SaveMessageCallback callback) {
+        Realm realm = null;
+        try {
+            realm = RealmUtil.getInstance();
+            realm.beginTransaction();
+            Message savedMessage = realm.copyToRealm(message);
+            realm.commitTransaction();
+            callback.onMessageSaved(savedMessage);
+        } catch (IllegalStateException ise) {
+            LogUtil.e(TAG, ise.getMessage(), ise);
+            callback.onError();
         }
     }
 }

@@ -17,6 +17,8 @@ public interface ChatContract {
 
     interface Presenter extends BasePresenter {
         void loadMessages();
+
+        void saveMessage(Message message);
     }
 
     interface View extends BaseView<Presenter> {
@@ -25,6 +27,14 @@ public interface ChatContract {
         void bindData(Bundle args);
 
         void showMessages(RealmResults<Message> messages);
+
+        void saveMessage(Message message);
+
+        void addNewMessage();
+
+        void showError(int id);
+
+        void reloadMessages();
     }
 
 

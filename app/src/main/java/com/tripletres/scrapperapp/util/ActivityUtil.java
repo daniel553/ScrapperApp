@@ -3,6 +3,8 @@ package com.tripletres.scrapperapp.util;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.widget.Toast;
 
 /**
  * Utility class for activities
@@ -26,5 +28,15 @@ public class ActivityUtil {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(id, fragment);
         fragmentTransaction.commit();
+    }
+
+    /**
+     * Shows an error message as a Toast.
+     *
+     * @param id
+     * @param context
+     */
+    public static void showError(int id, Context context) {
+        Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
     }
 }

@@ -15,6 +15,9 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmBaseAdapter;
 
 /**
+ * Chat message list adapter.
+ * Displays a list of messages in chat
+ * <p>
  * Created by Daniel on 20/07/2017.
  */
 

@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.util.ActivityUtil;
 
 import io.realm.RealmResults;
 
@@ -25,6 +27,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     private RealmResults<Message> mMessages;
     private ChatMessagesListAdapter mAdapter;
     private ListView mMessagesListView;
+    private TextView mInput;
 
     public ChatFragment() {
     }
@@ -57,6 +60,13 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void bindUI(View root) {
         mMessagesListView = (ListView) root.findViewById(R.id.fragment_chat_message_list);
+        mInput = (TextView) root.findViewById(R.id.fragment_chat_input);
+        root.findViewById(R.id.fragment_chat_button_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewMessage();
+            }
+        });
     }
 
     @Override
@@ -69,5 +79,27 @@ public class ChatFragment extends Fragment implements ChatContract.View {
         mMessages = messages;
         mAdapter = new ChatMessagesListAdapter(mMessages);
         mMessagesListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void saveMessage(Message message) {
+        mPresenter.saveMessage(message);
+    }
+
+    @Override
+    public void addNewMessage() {
+        String msg = mInput.getText().toString().trim();
+        if(msg.length()>0)
+            mPresenter.saveMessage(new Message(msg));
+    }
+
+    @Override
+    public void showError(int id) {
+        ActivityUtil.showError(id, getActivity());
+    }
+
+    @Override
+    public void reloadMessages() {
+        //No need to tell realm
     }
 }

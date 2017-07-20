@@ -1,10 +1,9 @@
 package com.tripletres.scrapperapp.chat;
 
+import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
-
-import java.util.List;
 
 import io.realm.RealmResults;
 
@@ -52,5 +51,19 @@ public class ChatPresenter implements ChatContract.Presenter {
         });
     }
 
+    @Override
+    public void saveMessage(Message message) {
+        mChatRepository.saveMessage(message, new ChatDataSourceContract.SaveMessageCallback() {
+            @Override
+            public void onMessageSaved(Message message) {
+                //Reload after save
+                mChatView.reloadMessages();
+            }
 
+            @Override
+            public void onError() {
+                mChatView.showError(R.string.error_saving_message);
+            }
+        });
+    }
 }

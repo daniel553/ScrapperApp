@@ -18,6 +18,14 @@ public class Message extends RealmObject {
     private String body;
     private Date createdAt = new Date();
 
+    public Message() {
+
+    }
+
+    public Message(String msg) {
+        this.body = msg;
+    }
+
     public String getId() {
         return id;
     }
