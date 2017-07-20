@@ -19,6 +19,8 @@ public interface ChatContract {
         void loadMessages();
 
         void saveMessage(Message message);
+
+        void getEmbedded(String msg);
     }
 
     interface View extends BaseView<Presenter> {
@@ -35,6 +37,7 @@ public interface ChatContract {
         void showError(int id);
 
         void reloadMessages();
+
     }
 
 

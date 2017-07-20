@@ -1,6 +1,8 @@
 package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSource;
+import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSourceContract;
 import com.tripletres.scrapperapp.util.AppUtil;
 import com.tripletres.scrapperapp.util.LogUtil;
 import com.tripletres.scrapperapp.util.RealmUtil;
@@ -89,5 +91,22 @@ public class ChatDataSource implements ChatDataSourceContract {
             LogUtil.e(TAG, ise.getMessage(), ise);
             callback.onError();
         }
+    }
+
+    @Override
+    public void getEmbedded(String url, final EmbeddedCallback callback) {
+        LogUtil.d(TAG, url);
+        EmbeddedDataSource embeddedDataSource = new EmbeddedDataSource();
+        embeddedDataSource.getEmbedded(url, new EmbeddedDataSourceContract.GetCallback() {
+            @Override
+            public void onSuccess(EmbeddedDataSource.Result result) {
+                callback.onSuccess(result);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 }

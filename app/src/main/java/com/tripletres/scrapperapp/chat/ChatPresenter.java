@@ -4,6 +4,9 @@ import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
+import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSource;
+import com.tripletres.scrapperapp.util.FormatUtil;
+import com.tripletres.scrapperapp.util.LogUtil;
 
 import io.realm.RealmResults;
 
@@ -13,6 +16,8 @@ import io.realm.RealmResults;
  */
 
 public class ChatPresenter implements ChatContract.Presenter {
+
+    private static final String TAG = ChatPresenter.class.getName();
 
     private final ChatRepository mChatRepository;
     private final ChatContract.View mChatView;
@@ -63,6 +68,22 @@ public class ChatPresenter implements ChatContract.Presenter {
             @Override
             public void onError() {
                 mChatView.showError(R.string.error_saving_message);
+            }
+        });
+    }
+
+    @Override
+    public void getEmbedded(String msg) {
+        final String url = FormatUtil.getUrl(msg);
+        mChatRepository.getEmbedded(url, new ChatDataSourceContract.EmbeddedCallback() {
+            @Override
+            public void onSuccess(EmbeddedDataSource.Result embedded) {
+                LogUtil.d(TAG, embedded.toString());
+            }
+
+            @Override
+            public void onError() {
+
             }
         });
     }

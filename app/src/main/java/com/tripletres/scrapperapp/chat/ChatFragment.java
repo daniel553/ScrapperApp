@@ -88,6 +88,10 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
     @Override
     public void addNewMessage() {
+
+        //TODO: remove
+        mPresenter.getEmbedded("");
+
         String msg = mInput.getText().toString().trim();
         if(msg.length()>0)
             mPresenter.saveMessage(new Message(msg));
