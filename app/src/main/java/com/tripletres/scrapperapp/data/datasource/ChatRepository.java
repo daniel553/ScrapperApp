@@ -1,6 +1,7 @@
 package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 import com.tripletres.scrapperapp.util.LogUtil;
 
 import io.realm.RealmResults;
@@ -75,6 +76,37 @@ public class ChatRepository implements ChatDataSourceContract {
 
             @Override
             public void onError() {
+            }
+        });
+    }
+
+    @Override
+    public void setEmbeddedToMessage(Message message, Embedded embedded, final SaveMessageCallback callback) {
+        mChatDatasource.setEmbeddedToMessage(message, embedded, new SaveMessageCallback() {
+            @Override
+            public void onMessageSaved(Message message) {
+                callback.onMessageSaved(message);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void getEmbedded(String url, final EmbeddedCallback callback) {
+        mChatDatasource.getEmbedded(url, new EmbeddedCallback() {
+            @Override
+            public void onSuccess(Embedded embedded) {
+                LogUtil.d(TAG, embedded.toString());
+                callback.onSuccess(embedded);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
             }
         });
     }

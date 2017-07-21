@@ -4,6 +4,8 @@ import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
+import com.tripletres.scrapperapp.util.FormatUtil;
 
 import io.realm.RealmResults;
 
@@ -13,6 +15,8 @@ import io.realm.RealmResults;
  */
 
 public class ChatPresenter implements ChatContract.Presenter {
+
+    private static final String TAG = ChatPresenter.class.getName();
 
     private final ChatRepository mChatRepository;
     private final ChatContract.View mChatView;
@@ -58,6 +62,7 @@ public class ChatPresenter implements ChatContract.Presenter {
             public void onMessageSaved(Message message) {
                 //Reload after save
                 mChatView.reloadMessages();
+                getEmbedded(message);
             }
 
             @Override
@@ -66,4 +71,36 @@ public class ChatPresenter implements ChatContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void getEmbedded(final Message message) {
+        final String url = FormatUtil.getUrl(message.getBody());
+        if (url != null)
+            mChatRepository.getEmbedded(url, new ChatDataSourceContract.EmbeddedCallback() {
+                @Override
+                public void onSuccess(Embedded embedded) {
+                    attachEmbedded(message, embedded);
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+    }
+
+    @Override
+    public void attachEmbedded(Message message, Embedded embedded) {
+        mChatRepository.setEmbeddedToMessage(message, embedded, new ChatDataSourceContract.SaveMessageCallback() {
+            @Override
+            public void onMessageSaved(Message message) {
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
+    }
+
+
 }
