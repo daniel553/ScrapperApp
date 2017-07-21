@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ScrapperApp</string>
+    <string name="app_name">Scrapper App</string>
     <string name="fragment_chat_input_hint">Write your message</string>
     <string name="error_saving_message">Error Saving Message</string>
     <string name="menu_chat_clear">Clear</string>
