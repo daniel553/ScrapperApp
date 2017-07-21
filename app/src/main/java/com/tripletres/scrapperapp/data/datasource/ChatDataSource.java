@@ -4,7 +4,6 @@ import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSource;
 import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSourceContract;
-import com.tripletres.scrapperapp.util.AppUtil;
 import com.tripletres.scrapperapp.util.LogUtil;
 import com.tripletres.scrapperapp.util.RealmUtil;
 
@@ -25,6 +24,7 @@ public class ChatDataSource implements ChatDataSourceContract {
     private static final String TAG = ChatDataSource.class.getName();
     private static ChatDataSource INSTANCE = null;
 
+
     private ChatDataSource() {
     }
 
@@ -37,17 +37,13 @@ public class ChatDataSource implements ChatDataSourceContract {
     @Override
     public void getMessages(LoadCallback callback) {
         Realm realm = null;
-        if (AppUtil.DEBUG) {
-            try {
-                realm = RealmUtil.getInstance();
-                if (realm.where(Message.class).count() <= 0)
-                    seedMessages(callback);
-                RealmResults<Message> messages = realm.where(Message.class).findAll();
-                callback.onMessagesLoaded(messages);
-            } catch (IllegalStateException ise) {
-                LogUtil.e(TAG, ise.getMessage(), ise);
-                callback.onError();
-            }
+        try {
+            realm = RealmUtil.getInstance();
+            RealmResults<Message> messages = realm.where(Message.class).findAll();
+            callback.onMessagesLoaded(messages);
+        } catch (IllegalStateException ise) {
+            LogUtil.e(TAG, ise.getMessage(), ise);
+            callback.onError();
         }
     }
 
@@ -59,22 +55,20 @@ public class ChatDataSource implements ChatDataSourceContract {
     @Override
     public void seedMessages(LoadCallback callback) {
         Realm realm = null;
-        if (AppUtil.DEBUG) {
-            try {
-                realm = RealmUtil.getInstance();
-                List<Message> messages = new ArrayList<>(10);
-                realm.beginTransaction();
-                for (int i = 0; i < 10; i++) {
-                    Message msg = new Message();
-                    msg.setBody("Body " + i);
-                    msg.setSender("Sender " + i);
-                    messages.add(realm.copyToRealm(msg));
-                }
-                realm.commitTransaction();
-            } catch (IllegalStateException ise) {
-                LogUtil.e(TAG, ise.getMessage(), ise);
-                callback.onError();
+        try {
+            realm = RealmUtil.getInstance();
+            List<Message> messages = new ArrayList<>(10);
+            realm.beginTransaction();
+            for (int i = 0; i < 10; i++) {
+                Message msg = new Message();
+                msg.setBody("Body " + i);
+                msg.setSender("Sender " + i);
+                messages.add(realm.copyToRealm(msg));
             }
+            realm.commitTransaction();
+        } catch (IllegalStateException ise) {
+            LogUtil.e(TAG, ise.getMessage(), ise);
+            callback.onError();
         }
     }
 
