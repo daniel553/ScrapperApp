@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingEnd="30dp"
-    android:paddingRight="30dp">
-
-    <ImageView
-        android:id="@+id/item_message_single_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+    android:paddingLeft="30dp"
+    android:paddingStart="30dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/item_message_single_image"
+        android:layout_toStartOf="@+id/item_message_single_image">
 
         <TextView
             android:id="@+id/item_message_single_sender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
             android:padding="5dp"
             android:textColor="@color/colorAccent" />
 
@@ -29,7 +27,10 @@
             android:id="@+id/item_message_single_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/item_message_single_sender"
+            android:gravity="end"
             android:padding="5dp" />
 
         <RelativeLayout
@@ -101,4 +102,12 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/item_message_single_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+</RelativeLayout>

@@ -99,7 +99,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     public void addNewMessage() {
         String msg = mInput.getText().toString().trim();
         if (msg.length() > 0)
-            mPresenter.saveMessage(new Message("Pedro Daniel", msg));
+            mPresenter.saveMessage(new Message("Pedro Daniel", msg, true));
     }
 
     @Override

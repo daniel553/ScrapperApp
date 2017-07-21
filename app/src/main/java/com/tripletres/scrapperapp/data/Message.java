@@ -18,6 +18,7 @@ public class Message extends RealmObject {
     private String id = UUID.randomUUID().toString();
     private String sender;
     private String body;
+    private boolean way = false;
     private Date createdAt = new Date();
 
     private Embedded embedded;
@@ -29,6 +30,12 @@ public class Message extends RealmObject {
     public Message(String sender, String msg) {
         this.sender = sender;
         this.body = msg;
+    }
+
+    public Message(String sender, String msg, boolean way) {
+        this.sender = sender;
+        this.body = msg;
+        this.way = way;
     }
 
     public String getId() {
@@ -69,5 +76,13 @@ public class Message extends RealmObject {
 
     public void setEmbedded(Embedded embedded) {
         this.embedded = embedded;
+    }
+
+    public boolean isWay() {
+        return way;
+    }
+
+    public void setWay(boolean way) {
+        this.way = way;
     }
 }
