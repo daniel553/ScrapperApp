@@ -95,15 +95,18 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void attachEmbedded(Message message, Embedded embedded) {
-        mChatRepository.setEmbeddedToMessage(message, embedded, new ChatDataSourceContract.SaveMessageCallback() {
-            @Override
-            public void onMessageSaved(Message message) {
-            }
+        //If embedded has no content, we do not need to save it.
+        if (embedded != null && embedded.title != null)
+            mChatRepository.setEmbeddedToMessage(message, embedded,
+                    new ChatDataSourceContract.SaveMessageCallback() {
+                        @Override
+                        public void onMessageSaved(Message message) {
+                        }
 
-            @Override
-            public void onError() {
-            }
-        });
+                        @Override
+                        public void onError() {
+                        }
+                    });
     }
 
     @Override
