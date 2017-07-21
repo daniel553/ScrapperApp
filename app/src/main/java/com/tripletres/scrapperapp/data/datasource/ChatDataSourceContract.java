@@ -38,6 +38,12 @@ public interface ChatDataSourceContract {
         void onError();
     }
 
+    interface ClearMessages {
+        void onMessagesClear();
+
+        void onError();
+    }
+
 
     //MAIN METHODS
 
@@ -50,6 +56,8 @@ public interface ChatDataSourceContract {
     void saveMessage(Message message, SaveMessageCallback callback);
 
     void setEmbeddedToMessage(Message message, Embedded embedded, SaveMessageCallback callback);
+
+    void clearMessages(ClearMessages callback);
 
     //Retrofit
     void getEmbedded(String url, EmbeddedCallback callback);

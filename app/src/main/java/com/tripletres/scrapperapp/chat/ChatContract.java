@@ -1,6 +1,7 @@
 package com.tripletres.scrapperapp.chat;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.tripletres.scrapperapp.BasePresenter;
 import com.tripletres.scrapperapp.BaseView;
@@ -24,6 +25,8 @@ public interface ChatContract {
         void getEmbedded(Message message);
 
         void attachEmbedded(Message message, Embedded embedded);
+
+        void onOptionsItemSelected(MenuItem item);
     }
 
     interface View extends BaseView<Presenter> {

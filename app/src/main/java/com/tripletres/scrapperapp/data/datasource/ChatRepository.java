@@ -96,6 +96,21 @@ public class ChatRepository implements ChatDataSourceContract {
     }
 
     @Override
+    public void clearMessages(final ClearMessages callback) {
+        mChatDatasource.clearMessages(new ClearMessages() {
+            @Override
+            public void onMessagesClear() {
+                callback.onMessagesClear();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
     public void getEmbedded(String url, final EmbeddedCallback callback) {
         mChatDatasource.getEmbedded(url, new EmbeddedCallback() {
             @Override

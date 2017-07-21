@@ -126,4 +126,6 @@ public class ChatFragment extends Fragment implements ChatContract.View {
             startActivity(intent);
         }
     }
+
+
 }

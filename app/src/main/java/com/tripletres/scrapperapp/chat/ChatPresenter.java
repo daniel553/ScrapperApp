@@ -1,5 +1,7 @@
 package com.tripletres.scrapperapp.chat;
 
+import android.view.MenuItem;
+
 import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
@@ -100,6 +102,27 @@ public class ChatPresenter implements ChatContract.Presenter {
             public void onError() {
             }
         });
+    }
+
+    @Override
+    public void onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_chat_clear:
+                mChatRepository.clearMessages(new ChatDataSourceContract.ClearMessages() {
+                    @Override
+                    public void onMessagesClear() {
+                        mChatView.reloadMessages();
+                    }
+
+                    @Override
+                    public void onError() {
+                        mChatView.showError(R.string.error_deleting_message);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 
 

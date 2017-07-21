@@ -2,6 +2,9 @@ package com.tripletres.scrapperapp.chat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -37,5 +40,19 @@ public class ChatActivity extends AppCompatActivity {
 
         //Presenter
         mChatPresenter = new ChatPresenter(Injection.provideChatRepository(getApplicationContext()), chatFragment);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mChatPresenter.onOptionsItemSelected(item);
+        return true;
     }
 }
