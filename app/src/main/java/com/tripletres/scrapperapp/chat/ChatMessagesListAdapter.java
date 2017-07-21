@@ -46,7 +46,7 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = (Message) getItem(position);
         final ViewHolder viewHolder;
-        if (convertView == null) {
+        if (convertView == null || !message.isWay()) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_single, parent, false);
             viewHolder = loadViewHolder(convertView);
