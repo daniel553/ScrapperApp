@@ -47,18 +47,58 @@ public interface ChatDataSourceContract {
 
     //MAIN METHODS
 
+    /**
+     * Gets all messages on database
+     *
+     * @param callback
+     */
     void getMessages(LoadCallback callback);
 
+    /**
+     * Get a single message
+     *
+     * @param callback
+     */
     void getMessage(GetMessageCallback callback);
 
+    /**
+     * Seed messages on db
+     *
+     * @param callback
+     */
     void seedMessages(LoadCallback callback);
 
+    /**
+     * Saves a new message on DB
+     *
+     * @param message
+     * @param callback
+     */
     void saveMessage(Message message, SaveMessageCallback callback);
 
+    /**
+     * Sets embedded to any message
+     *
+     * @param message  - {@link Message} target
+     * @param embedded - {@link Embedded} data
+     * @param callback
+     */
     void setEmbeddedToMessage(Message message, Embedded embedded, SaveMessageCallback callback);
 
+    /**
+     * Clears all messages in db
+     *
+     * @param callback
+     */
     void clearMessages(ClearMessages callback);
 
     //Retrofit
+
+    /**
+     * Get embedded data from URL
+     *
+     * @param url      - valid url
+     * @param callback
+     */
     void getEmbedded(String url, EmbeddedCallback callback);
 }

@@ -18,7 +18,7 @@ public class ChatBot implements ChatBotContract {
     private static ChatBot INSTANCE = null;
     private ChatPresenter mPresenter = null;
     private Handler handler = null;
-    private static int SECONDS = 6 * 1000;
+    private static int SECONDS = 8 * 1000;
 
     private ChatBot(ChatPresenter presenter) {
         mPresenter = presenter;

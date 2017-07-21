@@ -8,11 +8,25 @@ import com.tripletres.scrapperapp.data.Message;
  */
 
 public interface ChatBotContract {
+    /**
+     * Initializes the bot
+     */
     void init();
 
+    /**
+     * Bot sends a message to Database
+     */
     void sendMessage();
 
+    /**
+     * Bot is destroyed
+     */
     void destroy();
 
+    /**
+     * Generates a random message
+     *
+     * @return - {@link Message} created
+     */
     Message createRandomMessage();
 }
