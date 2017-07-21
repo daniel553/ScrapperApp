@@ -39,15 +39,26 @@
             android:layout_marginStart="15dp"
             android:visibility="gone">
 
+            <View
+                android:id="@+id/item_message_single_emb_decorator"
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/item_message_single_emb_image"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@color/colorAccent" />
+
             <TextView
                 android:id="@+id/item_message_single_emb_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/item_message_single_emb_decorator"
                 android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toRightOf="@+id/item_message_single_emb_decorator"
                 android:layout_toStartOf="@+id/item_message_single_emb_image"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -56,12 +67,12 @@
                 android:id="@+id/item_message_single_emb_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/item_message_single_emb_title"
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/item_message_single_emb_decorator"
                 android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toRightOf="@+id/item_message_single_emb_decorator"
                 android:layout_toStartOf="@+id/item_message_single_emb_image"
                 android:textSize="14sp"
                 android:textStyle="bold" />

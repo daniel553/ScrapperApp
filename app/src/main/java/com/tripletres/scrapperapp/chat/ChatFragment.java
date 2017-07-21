@@ -1,11 +1,14 @@
 package com.tripletres.scrapperapp.chat;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,6 +63,12 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void bindUI(View root) {
         mMessagesListView = (ListView) root.findViewById(R.id.fragment_chat_message_list);
+        mMessagesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                messageClicked(position);
+            }
+        });
         mInput = (TextView) root.findViewById(R.id.fragment_chat_input);
         root.findViewById(R.id.fragment_chat_button_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,5 +113,17 @@ public class ChatFragment extends Fragment implements ChatContract.View {
 
         //Clean text
         mInput.setText("");
+    }
+
+    @Override
+    public void messageClicked(int pos) {
+        Message message = (Message) mAdapter.getItem(pos);
+        if (message != null && message.getEmbedded() != null && message.getEmbedded().url != null) {
+            //Try to open url
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = Uri.parse(message.getEmbedded().url);
+            intent.setData(uri);
+            startActivity(intent);
+        }
     }
 }

@@ -41,6 +41,8 @@ public interface ChatContract {
 
         void reloadMessages();
 
+        void messageClicked(int pos);
+
     }
 
 
