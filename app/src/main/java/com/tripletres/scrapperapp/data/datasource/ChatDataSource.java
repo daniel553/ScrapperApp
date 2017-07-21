@@ -7,9 +7,6 @@ import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSourceContr
 import com.tripletres.scrapperapp.util.LogUtil;
 import com.tripletres.scrapperapp.util.RealmUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -40,7 +37,10 @@ public class ChatDataSource implements ChatDataSourceContract {
         try {
             realm = RealmUtil.getInstance();
             RealmResults<Message> messages = realm.where(Message.class).findAll();
-            callback.onMessagesLoaded(messages);
+            if (messages.size() <= 0)
+                seedMessages(callback);
+            else
+                callback.onMessagesLoaded(messages);
         } catch (IllegalStateException ise) {
             LogUtil.e(TAG, ise.getMessage(), ise);
             callback.onError();
@@ -57,15 +57,10 @@ public class ChatDataSource implements ChatDataSourceContract {
         Realm realm = null;
         try {
             realm = RealmUtil.getInstance();
-            List<Message> messages = new ArrayList<>(10);
             realm.beginTransaction();
-            for (int i = 0; i < 10; i++) {
-                Message msg = new Message();
-                msg.setBody("Body " + i);
-                msg.setSender("Sender " + i);
-                messages.add(realm.copyToRealm(msg));
-            }
+            realm.copyToRealm(new Message("Android Bot", " Say hello to Android"));
             realm.commitTransaction();
+            callback.onMessagesLoaded(realm.where(Message.class).findAll());
         } catch (IllegalStateException ise) {
             LogUtil.e(TAG, ise.getMessage(), ise);
             callback.onError();

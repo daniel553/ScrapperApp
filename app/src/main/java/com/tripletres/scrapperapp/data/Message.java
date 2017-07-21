@@ -26,7 +26,8 @@ public class Message extends RealmObject {
 
     }
 
-    public Message(String msg) {
+    public Message(String sender, String msg) {
+        this.sender = sender;
         this.body = msg;
     }
 

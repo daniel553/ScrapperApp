@@ -75,17 +75,18 @@ public class ChatPresenter implements ChatContract.Presenter {
     @Override
     public void getEmbedded(final Message message) {
         final String url = FormatUtil.getUrl(message.getBody());
-        mChatRepository.getEmbedded(url, new ChatDataSourceContract.EmbeddedCallback() {
-            @Override
-            public void onSuccess(Embedded embedded) {
-                attachEmbedded(message, embedded);
-            }
+        if (url != null)
+            mChatRepository.getEmbedded(url, new ChatDataSourceContract.EmbeddedCallback() {
+                @Override
+                public void onSuccess(Embedded embedded) {
+                    attachEmbedded(message, embedded);
+                }
 
-            @Override
-            public void onError() {
+                @Override
+                public void onError() {
 
-            }
-        });
+                }
+            });
     }
 
     @Override
