@@ -89,7 +89,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void addNewMessage() {
         String msg = mInput.getText().toString().trim();
-        if(msg.length()>0)
+        if (msg.length() > 0)
             mPresenter.saveMessage(new Message("Pedro Daniel", msg));
     }
 
@@ -101,5 +101,8 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void reloadMessages() {
         //No need to tell realm
+
+        //Clean text
+        mInput.setText("");
     }
 }
