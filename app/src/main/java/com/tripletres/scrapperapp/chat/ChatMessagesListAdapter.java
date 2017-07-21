@@ -46,23 +46,15 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
     public View getView(int position, View convertView, ViewGroup parent) {
         Message message = (Message) getItem(position);
         final ViewHolder viewHolder;
-        if (convertView == null) {
+        if (convertView == null || !message.isWay()) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message_single, parent, false);
-
-            viewHolder = new ViewHolder();
-            viewHolder.mImageSender = (ImageView) convertView.findViewById(R.id.item_message_single_image);
-            viewHolder.mName = (TextView) convertView.findViewById(R.id.item_message_single_sender);
-            viewHolder.mBody = (TextView) convertView.findViewById(R.id.item_message_single_body);
-
-            //Embed
-            viewHolder.mEmbedLayout = (RelativeLayout) convertView.findViewById(R.id.item_message_single_embed);
-            viewHolder.mTitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_title);
-            viewHolder.mSubtitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_subtitle);
-            viewHolder.mImageEmbed = (ImageView) convertView.findViewById(R.id.item_message_single_emb_image);
-            viewHolder.mProgress = (ProgressBar) convertView.findViewById(R.id.item_message_single_emb_progress);
-
-            convertView.setTag(viewHolder);
+            viewHolder = loadViewHolder(convertView);
+        } else if (message.isWay()) {
+            //Is Reversed
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_reversed, parent, false);
+            viewHolder = loadViewHolder(convertView);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
@@ -94,6 +86,23 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
         }
 
         return convertView;
+    }
+
+    private ViewHolder loadViewHolder(View convertView) {
+        ViewHolder viewHolder = new ViewHolder();
+        viewHolder.mImageSender = (ImageView) convertView.findViewById(R.id.item_message_single_image);
+        viewHolder.mName = (TextView) convertView.findViewById(R.id.item_message_single_sender);
+        viewHolder.mBody = (TextView) convertView.findViewById(R.id.item_message_single_body);
+
+        //Embed
+        viewHolder.mEmbedLayout = (RelativeLayout) convertView.findViewById(R.id.item_message_single_embed);
+        viewHolder.mTitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_title);
+        viewHolder.mSubtitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_subtitle);
+        viewHolder.mImageEmbed = (ImageView) convertView.findViewById(R.id.item_message_single_emb_image);
+        viewHolder.mProgress = (ProgressBar) convertView.findViewById(R.id.item_message_single_emb_progress);
+
+        convertView.setTag(viewHolder);
+        return viewHolder;
     }
 
     /**

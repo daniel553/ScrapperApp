@@ -19,7 +19,8 @@ public class RealmUtil {
      */
     public static void setConfig(Context context) {
         Realm.init(context);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 

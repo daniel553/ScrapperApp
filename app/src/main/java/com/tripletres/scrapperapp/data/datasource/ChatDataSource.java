@@ -99,6 +99,23 @@ public class ChatDataSource implements ChatDataSourceContract {
     }
 
     @Override
+    public void clearMessages(ClearMessages callback) {
+        Realm realm = null;
+        try {
+            realm = RealmUtil.getInstance();
+            RealmResults<Message> messages = realm.where(Message.class).findAll();
+            realm.beginTransaction();
+            for (Message m : messages)
+                m.deleteFromRealm();
+            realm.commitTransaction();
+            callback.onMessagesClear();
+        } catch (IllegalStateException ise) {
+            LogUtil.e(TAG, ise.getMessage(), ise);
+            callback.onError();
+        }
+    }
+
+    @Override
     public void getEmbedded(String url, final EmbeddedCallback callback) {
         LogUtil.d(TAG, url);
         EmbeddedDataSource embeddedDataSource = new EmbeddedDataSource();

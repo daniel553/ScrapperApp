@@ -53,6 +53,13 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     public void onResume() {
         super.onResume();
         bindData(getArguments());
+        initBot();
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.stopBot();
+        super.onPause();
     }
 
     @Override
@@ -99,7 +106,7 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     public void addNewMessage() {
         String msg = mInput.getText().toString().trim();
         if (msg.length() > 0)
-            mPresenter.saveMessage(new Message("Pedro Daniel", msg));
+            mPresenter.saveMessage(new Message("Pedro Daniel", msg, true));
     }
 
     @Override
@@ -110,8 +117,10 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void reloadMessages() {
         //No need to tell realm
+    }
 
-        //Clean text
+    @Override
+    public void clearInput() {
         mInput.setText("");
     }
 
@@ -126,4 +135,10 @@ public class ChatFragment extends Fragment implements ChatContract.View {
             startActivity(intent);
         }
     }
+
+    @Override
+    public void initBot() {
+        mPresenter.initBot();
+    }
+
 }
