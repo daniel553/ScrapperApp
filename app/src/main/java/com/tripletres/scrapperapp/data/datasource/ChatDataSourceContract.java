@@ -1,7 +1,7 @@
 package com.tripletres.scrapperapp.data.datasource;
 
 import com.tripletres.scrapperapp.data.Message;
-import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSource;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 
 import io.realm.RealmResults;
 
@@ -33,7 +33,7 @@ public interface ChatDataSourceContract {
     }
 
     interface EmbeddedCallback {
-        void onSuccess(EmbeddedDataSource.Result embedded);
+        void onSuccess(Embedded embedded);
 
         void onError();
     }
@@ -48,6 +48,8 @@ public interface ChatDataSourceContract {
     void seedMessages(LoadCallback callback);
 
     void saveMessage(Message message, SaveMessageCallback callback);
+
+    void setEmbeddedToMessage(Message message, Embedded embedded, SaveMessageCallback callback);
 
     //Retrofit
     void getEmbedded(String url, EmbeddedCallback callback);

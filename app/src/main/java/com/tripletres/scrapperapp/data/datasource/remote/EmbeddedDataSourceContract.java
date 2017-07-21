@@ -6,7 +6,7 @@ package com.tripletres.scrapperapp.data.datasource.remote;
 
 public interface EmbeddedDataSourceContract {
     interface GetCallback {
-        void onSuccess(EmbeddedDataSource.Result url);
+        void onSuccess(Embedded url);
         void onError();
     }
 

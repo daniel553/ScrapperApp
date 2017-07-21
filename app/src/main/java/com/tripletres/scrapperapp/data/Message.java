@@ -1,5 +1,7 @@
 package com.tripletres.scrapperapp.data;
 
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,6 +19,8 @@ public class Message extends RealmObject {
     private String sender;
     private String body;
     private Date createdAt = new Date();
+
+    private Embedded embedded;
 
     public Message() {
 
@@ -56,5 +60,13 @@ public class Message extends RealmObject {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Embedded getEmbedded() {
+        return embedded;
+    }
+
+    public void setEmbedded(Embedded embedded) {
+        this.embedded = embedded;
     }
 }

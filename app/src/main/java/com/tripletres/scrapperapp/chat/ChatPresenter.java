@@ -4,9 +4,8 @@ import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
-import com.tripletres.scrapperapp.data.datasource.remote.EmbeddedDataSource;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 import com.tripletres.scrapperapp.util.FormatUtil;
-import com.tripletres.scrapperapp.util.LogUtil;
 
 import io.realm.RealmResults;
 
@@ -63,6 +62,7 @@ public class ChatPresenter implements ChatContract.Presenter {
             public void onMessageSaved(Message message) {
                 //Reload after save
                 mChatView.reloadMessages();
+                getEmbedded(message);
             }
 
             @Override
@@ -73,12 +73,12 @@ public class ChatPresenter implements ChatContract.Presenter {
     }
 
     @Override
-    public void getEmbedded(String msg) {
-        final String url = FormatUtil.getUrl(msg);
+    public void getEmbedded(final Message message) {
+        final String url = FormatUtil.getUrl(message.getBody());
         mChatRepository.getEmbedded(url, new ChatDataSourceContract.EmbeddedCallback() {
             @Override
-            public void onSuccess(EmbeddedDataSource.Result embedded) {
-                LogUtil.d(TAG, embedded.toString());
+            public void onSuccess(Embedded embedded) {
+                attachEmbedded(message, embedded);
             }
 
             @Override
@@ -87,4 +87,19 @@ public class ChatPresenter implements ChatContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void attachEmbedded(Message message, Embedded embedded) {
+        mChatRepository.setEmbeddedToMessage(message, embedded, new ChatDataSourceContract.SaveMessageCallback() {
+            @Override
+            public void onMessageSaved(Message message) {
+            }
+
+            @Override
+            public void onError() {
+            }
+        });
+    }
+
+
 }

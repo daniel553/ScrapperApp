@@ -14,5 +14,5 @@ public interface NoEmbedService {
     String BASE_URL = "http://noembed.com/";
 
     @GET("embed")
-    Call<EmbeddedDataSource.Result> getEmbedded(@Query("url") String url);
+    Call<Embedded> getEmbedded(@Query("url") String url);
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.tripletres.scrapperapp.BasePresenter;
 import com.tripletres.scrapperapp.BaseView;
 import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 
 import io.realm.RealmResults;
 
@@ -20,7 +21,9 @@ public interface ChatContract {
 
         void saveMessage(Message message);
 
-        void getEmbedded(String msg);
+        void getEmbedded(Message message);
+
+        void attachEmbedded(Message message, Embedded embedded);
     }
 
     interface View extends BaseView<Presenter> {

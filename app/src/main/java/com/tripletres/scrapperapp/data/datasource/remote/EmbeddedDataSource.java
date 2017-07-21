@@ -1,5 +1,6 @@
 package com.tripletres.scrapperapp.data.datasource.remote;
 
+import io.realm.RealmObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,37 +27,18 @@ public class EmbeddedDataSource implements EmbeddedDataSourceContract {
                 .build();
 
         NoEmbedService service = retrofit.create(NoEmbedService.class);
-        Call<Result> results = service.getEmbedded(url);
-        results.enqueue(new Callback<Result>() {
+        Call<Embedded> results = service.getEmbedded(url);
+        results.enqueue(new Callback<Embedded>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(Call<Embedded> call, Response<Embedded> response) {
                 callback.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<Embedded> call, Throwable t) {
                 callback.onError();
             }
         });
     }
 
-    /**
-     * Result for embedded api
-     */
-    public class Result {
-        public int width;
-        public String author_name;
-        public String author_url;
-        public String version;
-        public String provider_url;
-        public String provider_name;
-        public String thumbnail_width;
-        public String thumbnail_url;
-        public int height;
-        public String thumbnail_height;
-        public String html;
-        public String url;
-        public String type;
-        public String title;
-    }
 }
