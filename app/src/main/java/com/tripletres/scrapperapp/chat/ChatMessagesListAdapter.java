@@ -1,15 +1,18 @@
 package com.tripletres.scrapperapp.chat;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tripletres.scrapperapp.R;
 import com.tripletres.scrapperapp.data.Message;
+import com.tripletres.scrapperapp.data.datasource.remote.Embedded;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmBaseAdapter;
@@ -34,6 +37,7 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Message message = (Message) getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
@@ -43,14 +47,34 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
             viewHolder.mImageSender = (ImageView) convertView.findViewById(R.id.item_message_single_image);
             viewHolder.mName = (TextView) convertView.findViewById(R.id.item_message_single_sender);
             viewHolder.mBody = (TextView) convertView.findViewById(R.id.item_message_single_body);
+
+            //Embed
+            viewHolder.mEmbedLayout = (RelativeLayout) convertView.findViewById(R.id.item_message_single_embed);
+            viewHolder.mTitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_title);
+            viewHolder.mSubtitle = (TextView) convertView.findViewById(R.id.item_message_single_emb_subtitle);
+            viewHolder.mImageEmbed = (ImageView) convertView.findViewById(R.id.item_message_single_emb_image);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Message message = (Message) getItem(position);
         viewHolder.mName.setText(message.getSender());
         viewHolder.mBody.setText(message.getBody());
+        Embedded embedded = message.getEmbedded();
+        if (embedded != null) {
+            viewHolder.mEmbedLayout.setVisibility(View.VISIBLE);
+            if (embedded.provider_name != null)
+                viewHolder.mTitle.setText(embedded.provider_name);
+            if (embedded.title != null)
+                viewHolder.mSubtitle.setText(embedded.title);
+            if (embedded.thumbnail_url != null && !TextUtils.isEmpty(embedded.thumbnail_url)) {
+                //TODO: call image loader
+            }
+
+        } else {
+            viewHolder.mEmbedLayout.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
@@ -62,5 +86,11 @@ public class ChatMessagesListAdapter extends RealmBaseAdapter implements ListAda
         ImageView mImageSender;
         TextView mName;
         TextView mBody;
+
+        //Embed
+        RelativeLayout mEmbedLayout;
+        TextView mTitle;
+        TextView mSubtitle;
+        ImageView mImageEmbed;
     }
 }

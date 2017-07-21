@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/item_message_single_sender"
@@ -30,5 +30,52 @@
             android:layout_below="@+id/item_message_single_sender"
             android:padding="5dp"
             android:text="Body" />
+
+        <RelativeLayout
+            android:id="@+id/item_message_single_embed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_message_single_body"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/item_message_single_emb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toStartOf="@+id/item_message_single_emb_image"
+                android:text="Title"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_message_single_emb_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/item_message_single_emb_title"
+                android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toStartOf="@+id/item_message_single_emb_image"
+                android:text="Subtitle"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/item_message_single_emb_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_launcher" />
+
+        </RelativeLayout>
+
     </RelativeLayout>
+
 </LinearLayout>
