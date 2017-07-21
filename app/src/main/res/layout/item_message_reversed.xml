@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="30dp"
+    android:paddingStart="30dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/item_message_single_image"
+        android:layout_toStartOf="@+id/item_message_single_image">
+
+        <TextView
+            android:id="@+id/item_message_single_sender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
+            android:padding="5dp"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/item_message_single_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/item_message_single_sender"
+            android:gravity="end"
+            android:padding="5dp" />
+
+        <RelativeLayout
+            android:id="@+id/item_message_single_embed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_message_single_body"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/item_message_single_emb_decorator"
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/item_message_single_emb_image"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/item_message_single_emb_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/item_message_single_emb_decorator"
+                android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toRightOf="@+id/item_message_single_emb_decorator"
+                android:layout_toStartOf="@+id/item_message_single_emb_image"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_message_single_emb_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_message_single_emb_title"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/item_message_single_emb_decorator"
+                android:layout_toLeftOf="@+id/item_message_single_emb_image"
+                android:layout_toRightOf="@+id/item_message_single_emb_decorator"
+                android:layout_toStartOf="@+id/item_message_single_emb_image"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+            <ProgressBar
+                android:id="@+id/item_message_single_emb_progress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/item_message_single_emb_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/item_message_single_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        app:srcCompat="@mipmap/ic_dany" />
+
+</RelativeLayout>
