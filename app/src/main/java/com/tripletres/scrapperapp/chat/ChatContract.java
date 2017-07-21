@@ -27,6 +27,12 @@ public interface ChatContract {
         void attachEmbedded(Message message, Embedded embedded);
 
         void onOptionsItemSelected(MenuItem item);
+
+        String getString(int id);
+
+        void initBot();
+
+        void stopBot();
     }
 
     interface View extends BaseView<Presenter> {
@@ -45,6 +51,10 @@ public interface ChatContract {
         void reloadMessages();
 
         void messageClicked(int pos);
+
+        String getString(int id);
+
+        void initBot();
 
     }
 

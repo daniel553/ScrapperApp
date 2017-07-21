@@ -53,6 +53,13 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     public void onResume() {
         super.onResume();
         bindData(getArguments());
+        initBot();
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.stopBot();
+        super.onPause();
     }
 
     @Override
@@ -127,5 +134,9 @@ public class ChatFragment extends Fragment implements ChatContract.View {
         }
     }
 
+    @Override
+    public void initBot() {
+        mPresenter.initBot();
+    }
 
 }

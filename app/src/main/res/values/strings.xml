@@ -4,4 +4,11 @@
     <string name="error_saving_message">Error Saving Message</string>
     <string name="menu_chat_clear">Clear</string>
     <string name="error_deleting_message">Error to delete</string>
+
+    <!--Bot -->
+    <string name="bot_1">I like work: it fascinates me. I can sit and look at it for hours.</string>
+    <string name="bot_2">All happiness depends on courage and work https://youtu.be/3P38Ez_nJAI</string>
+    <string name="bot_3">In the name of God, stop a moment, cease your work, look around you.</string>
+    <string name="bot_4">Your purpose in life is to find your purpose and give your whole heart and soul to it</string>
+    <string name="bot_5"> When he worked, he really worked. But when he played, he really PLAYED.</string>
 </resources>

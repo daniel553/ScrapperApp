@@ -1,8 +1,10 @@
 package com.tripletres.scrapperapp.chat;
 
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.tripletres.scrapperapp.R;
+import com.tripletres.scrapperapp.chat.bot.ChatBot;
 import com.tripletres.scrapperapp.data.Message;
 import com.tripletres.scrapperapp.data.datasource.ChatDataSourceContract;
 import com.tripletres.scrapperapp.data.datasource.ChatRepository;
@@ -38,7 +40,6 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void start() {
-
     }
 
     @Override
@@ -59,19 +60,20 @@ public class ChatPresenter implements ChatContract.Presenter {
 
     @Override
     public void saveMessage(Message message) {
-        mChatRepository.saveMessage(message, new ChatDataSourceContract.SaveMessageCallback() {
-            @Override
-            public void onMessageSaved(Message message) {
-                //Reload after save
-                mChatView.reloadMessages();
-                getEmbedded(message);
-            }
+        if (message != null && !TextUtils.isEmpty(message.getBody()))
+            mChatRepository.saveMessage(message, new ChatDataSourceContract.SaveMessageCallback() {
+                @Override
+                public void onMessageSaved(Message message) {
+                    //Reload after save
+                    mChatView.reloadMessages();
+                    getEmbedded(message);
+                }
 
-            @Override
-            public void onError() {
-                mChatView.showError(R.string.error_saving_message);
-            }
-        });
+                @Override
+                public void onError() {
+                    mChatView.showError(R.string.error_saving_message);
+                }
+            });
     }
 
     @Override
@@ -123,6 +125,21 @@ public class ChatPresenter implements ChatContract.Presenter {
             default:
                 break;
         }
+    }
+
+    @Override
+    public String getString(int id) {
+        return mChatView.getString(id);
+    }
+
+    @Override
+    public void initBot() {
+        ChatBot.getInstance(this).init();
+    }
+
+    @Override
+    public void stopBot() {
+        ChatBot.getInstance(this).destroy();
     }
 
 
