@@ -66,6 +66,8 @@ public class ChatPresenter implements ChatContract.Presenter {
                 public void onMessageSaved(Message message) {
                     //Reload after save
                     mChatView.reloadMessages();
+                    if (message.isWay())
+                        mChatView.clearInput();
                     getEmbedded(message);
                 }
 

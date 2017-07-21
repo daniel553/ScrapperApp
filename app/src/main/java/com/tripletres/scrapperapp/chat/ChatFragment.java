@@ -117,8 +117,10 @@ public class ChatFragment extends Fragment implements ChatContract.View {
     @Override
     public void reloadMessages() {
         //No need to tell realm
+    }
 
-        //Clean text
+    @Override
+    public void clearInput() {
         mInput.setText("");
     }
 

@@ -118,6 +118,11 @@ public interface ChatContract {
         void reloadMessages();
 
         /**
+         * Clears input text
+         */
+        void clearInput();
+
+        /**
          * List item message clicked
          *
          * @param pos - Position of clicked item
